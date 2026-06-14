@@ -2069,7 +2069,8 @@ def test_app_server_start_uses_real_home_for_private_inherited_codex_home(
             target_at_spawn = Path(recorded_env["CODEX_HOME"])
             assert target_at_spawn != inherited
             assert (target_at_spawn / "auth.json").is_symlink()
-            assert (target_at_spawn / "config.toml").is_symlink()
+            assert not (target_at_spawn / "config.toml").is_symlink()
+            assert (target_at_spawn / "config.toml").is_file()
             assert (target_at_spawn / "auth.json").read_text() == '{"auth_mode": "api_key"}'
             assert (target_at_spawn / "config.toml").read_text() == 'model_provider = "openai"'
             return fake_proc
